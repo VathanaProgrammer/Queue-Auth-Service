@@ -32,9 +32,6 @@ jobs:
         username: ubuntu
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          if [ ! -d "Queue-Auth-Service" ]; then
-            git clone https://github.com/VathanaProgrammer/Queue-Auth-Service.git
-          fi
           cd Queue-Auth-Service
           git pull origin main
           mvn clean package -DskipTests
@@ -55,4 +52,4 @@ jobs:
           📝 *Commit:* ${{ github.event.head_commit.message }}
           ⏰ *Time:* ${{ steps.time.outputs.DEPLOY_TIME }}
           
-          ✅ *Status:* Auth Service is Online.
+          ✅ *Status:* Online and healthy.
