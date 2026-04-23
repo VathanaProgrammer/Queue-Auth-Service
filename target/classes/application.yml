@@ -2,8 +2,8 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/XEPDB1
-    username: QUEUE_ADMIN
+    url: jdbc:oracle:thin:@localhost:1521/XE
+    username: C##QUEUE_ADMIN
     password: password123
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
