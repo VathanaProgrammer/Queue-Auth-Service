@@ -46,7 +46,7 @@ jobs:
           🚀 *Auto-Deployment Successful!*
           
           📁 *Project:* Queue-Auth-Service
-          🌐 *Server:* 54.234.102.50:8081
+          🌐 *Server:* 54.234.102.50:8080
           🌿 *Branch:* ${{ github.ref_name }}
           👤 *Author:* ${{ github.actor }}
           📝 *Commit:* ${{ github.event.head_commit.message }}
