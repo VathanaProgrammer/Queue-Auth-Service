@@ -1,0 +1,58 @@
+name: CI/CD Deploy Auth Service to AWS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Build with Maven
+      run: mvn clean package -DskipTests
+
+    - name: Get Formatted Time
+      id: time
+      run: echo "DEPLOY_TIME=$(TZ='Asia/Bangkok' date +'%Y-%m-%d %I:%M %p')" >> $GITHUB_OUTPUT
+
+    - name: Deploy to Auth Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ec2-54-234-102-50.compute-1.amazonaws.com
+        username: ubuntu
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          if [ ! -d "Queue-Auth-Service" ]; then
+            git clone https://github.com/VathanaProgrammer/Queue-Auth-Service.git
+          fi
+          cd Queue-Auth-Service
+          git pull origin main
+          mvn clean package -DskipTests
+          sudo systemctl restart auth-service
+
+    - name: Send Telegram Notification
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: |
+          🚀 *Auto-Deployment Successful!*
+          
+          📁 *Project:* Queue-Auth-Service
+          🌐 *Server:* 54.234.102.50:8081
+          🌿 *Branch:* ${{ github.ref_name }}
+          👤 *Author:* ${{ github.actor }}
+          📝 *Commit:* ${{ github.event.head_commit.message }}
+          ⏰ *Time:* ${{ steps.time.outputs.DEPLOY_TIME }}
+          
+          ✅ *Status:* Auth Service is Online.
