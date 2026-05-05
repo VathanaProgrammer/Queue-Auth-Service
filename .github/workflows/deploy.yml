@@ -51,7 +51,7 @@ jobs:
             sudo docker rm -f auth-service || true
 
             PID=$(sudo lsof -t -i:8989 || true)
-            if [ -n "$PID" ]; then
+            if [ -n "$PID" ]; then 
               sudo kill -9 $PID || true
             fi
 
