@@ -76,6 +76,7 @@ jobs:
               --name auth-service \
               --restart unless-stopped \
               -p 8989:8989 \
+              -e SPRING_PROFILES_ACTIVE=prod \
               auth-service
 
             sudo docker ps
