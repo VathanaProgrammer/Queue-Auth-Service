@@ -9,7 +9,7 @@ spring:
       ddl-auto: update
 
 server:
-  port: 8444
+  port: 8989
 
 eureka:
   client:

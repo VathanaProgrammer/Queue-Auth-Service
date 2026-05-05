@@ -11,7 +11,7 @@ jobs:
 
     env:
       PROJECT_NAME: Queue-Auth-Service
-      SERVER_URL: 3.81.88.247:8444
+      SERVER_URL: 3.81.88.247:8989
 
     steps:
       - name: Checkout code
@@ -50,14 +50,14 @@ jobs:
 
             sudo docker rm -f auth-service || true
 
-            PID=$(sudo lsof -t -i:8444 || true)
+            PID=$(sudo lsof -t -i:8989 || true)
             if [ -n "$PID" ]; then
               sudo kill -9 $PID || true
             fi
 
             sleep 2
 
-            if sudo lsof -i :8444; then
+            if sudo lsof -i :8989; then
               echo "ERROR: Port still in use"
               exit 1
             fi
@@ -67,7 +67,7 @@ jobs:
             sudo docker run -d \
               --name auth-service \
               --restart unless-stopped \
-              -p 8444:8444 \
+              -p 8989:8989 \
               auth-service
 
             sudo docker ps
