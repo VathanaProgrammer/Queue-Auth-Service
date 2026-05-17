@@ -6,7 +6,7 @@ CREATE TABLE TBLROLE(
 
 -- Enable UUID generation
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
+-- for register
 CREATE TABLE tblusers (
     user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role_id UUID NOT NULL,
