@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/XE
-    username: C##QUEUE_ADMIN
-    password: password123
-    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:postgresql://localhost:5432/auth_services
+    username: postgres
+    password: 1212
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
